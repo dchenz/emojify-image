@@ -1,0 +1,11 @@
+__pycache__
+
+# Ignore a bunch of image formats
+*.png
+*.jpg
+*.gif
+*.tiff
+*.bmp
+
+# Except this important image
+!palette.png
