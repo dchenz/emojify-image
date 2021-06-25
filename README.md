@@ -9,7 +9,7 @@
 python3 run.py image.png kek.gif
 
  # Above, but overriding the default values
-python3 run.py image.gif kek.gif --fromGIF --width 1536 --line 64
+python3 run.py image.png kek.gif --width 1536 --line 64
 ```
 
 ### Configuration
