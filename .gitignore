@@ -1,4 +1,5 @@
 __pycache__
+.venv
 
 # Ignore a bunch of image formats
 *.png
@@ -9,3 +10,6 @@ __pycache__
 
 # Except this important image
 !palette.png
+
+# And demo images
+!demo/*
