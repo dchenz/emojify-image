@@ -1,39 +1,38 @@
 # Image Emotify
 
-## Generating GIF using PNG
-
-### Usage
+## Usage
 
 ```sh
-# Suppose the emote "kek.gif" is located in current directory...
-python3 run.py image.png kek.gif
+# Generating GIF using PNG
+python3 run.py image.png emote.gif
 
- # Above, but overriding the default values
-python3 run.py image.png kek.gif --width 1536 --line 64
+# Generating GIF using GIF
+# Image must be a GIF when using the ``--gif-source`` flag
+python3 run.py image.gif emote.gif --gif-source
 ```
 
-### Configuration
+```
+PNG to GIF
+----------
 
-- ``EMOTES_PER_LINE``: Number of emotes on one line. (default: 64)
-- ``GIF_WIDTH``: Width of the final GIF. Height is automatic. (default: 2048)
-- ``GIF_FRAME_DELAY``: Number of milliseconds between GIF frames. (default: 45)
+Emote Size:      112 x  112 (10 frames)
+Input Size:      128 x  128
 
-## Generating GIF using GIF
-
-### Usage
-
-```sh
-# Suppose the emote "kek.gif" is located in current directory...
-python3 run.py image.gif kek.gif --fromGIF
-
- # Above, but overriding the default values
-python3 run.py image.gif kek.gif --fromGIF --width 1536 --line 64
+Progress:       Frame 7 of 10
 ```
 
-- Image must end with ``.gif`` if using ``--fromGIF`` option.
+## Configuration
 
-### Configuration
+```ini
+[graphics]
+EmotesPerLine = 32          # Number of emotes on one row in output GIF
+FinalOutputWidth = 1024     # Pixel width of the output GIF
+FrameDelay = 45             # Number of milliseconds between GIF frames
+```
 
-- ``EMOTES_PER_LINE``: Number of emotes on one line. (default: 32)
-- ``GIF_WIDTH``: Width of the final GIF. Height is automatic. (default: 1024)
-- ``GIF_FRAME_DELAY``: Number of milliseconds between GIF frames. (default: 45)
+## Demo
+
+These are examples created using Discord emojis. Try enabling GitHub dark mode for a better view.
+
+![Example 1](./demo/1.gif)
+![Example 2](./demo/2.gif)
