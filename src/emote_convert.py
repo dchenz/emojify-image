@@ -9,6 +9,7 @@ from .progress_logger import on_load_log, on_progress_log
 # Output 2: Large GIF containing PNG
 # Output 3: Large GIF containing another GIF
 
+
 class EmoteConvert:
     def __init__(self, emote_path, palette_path):
         self._emote_im = Image.open(emote_path)
@@ -18,8 +19,13 @@ class EmoteConvert:
     def png_to_gif(self, png_path, options):
         im = Image.open(png_path)
         on_load_log(self._emote_im, im, mode=0)
-        resized_im = resize_colourise_image(im, self._palette_im, options["EMOTES_PER_LINE"])
-        assert options["EMOTES_PER_LINE"] is None or options["EMOTES_PER_LINE"] == resized_im.width
+        resized_im = resize_colourise_image(
+            im, self._palette_im, options["EMOTES_PER_LINE"]
+        )
+        assert (
+            options["EMOTES_PER_LINE"] is None
+            or options["EMOTES_PER_LINE"] == resized_im.width
+        )
         bg_frame_images = []
         for frame in range(self._emote_im.n_frames):
             on_progress_log(self._emote_im, im, frame, mode=0)
@@ -33,8 +39,13 @@ class EmoteConvert:
         bg_frame_images = []
         for frame in range(gif_im.n_frames):
             gif_im.seek(frame)
-            gif_frame_im = resize_colourise_image(gif_im, self._palette_im, options["EMOTES_PER_LINE"])
-            assert options["EMOTES_PER_LINE"] is None or options["EMOTES_PER_LINE"] == gif_frame_im.width
+            gif_frame_im = resize_colourise_image(
+                gif_im, self._palette_im, options["EMOTES_PER_LINE"]
+            )
+            assert (
+                options["EMOTES_PER_LINE"] is None
+                or options["EMOTES_PER_LINE"] == gif_frame_im.width
+            )
             on_progress_log(self._emote_im, gif_im, frame, mode=1)
             bg_im = self._create_gif_frame(gif_frame_im, frame, options)
             bg_frame_images.append(bg_im)
@@ -43,7 +54,10 @@ class EmoteConvert:
     # Create frames for animated GIF generation
     def _create_gif_frame(self, im, frame, options, cache={}):
         emote_width = options["GIF_WIDTH"] // im.width
-        gif_size = (options["GIF_WIDTH"], int(options["GIF_WIDTH"] / im.width * im.height))
+        gif_size = (
+            options["GIF_WIDTH"],
+            int(options["GIF_WIDTH"] / im.width * im.height),
+        )
         background_im = Image.new("RGB", gif_size, (0, 0, 0))
         for y in range(im.height):
             for x in range(im.width):
@@ -57,4 +71,3 @@ class EmoteConvert:
                     cache[key] = frame_im.resize((emote_width, emote_width))
                 background_im.paste(cache[key], (emote_width * x, emote_width * y))
         return background_im
-

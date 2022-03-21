@@ -11,7 +11,10 @@ def to_rgb_colour(im, rgb):
     for rd, gr, bl, al in zip(r.getdata(), g.getdata(), b.getdata(), a.getdata()):
         s, v = colorsys.rgb_to_hsv(rd / 255, gr / 255, bl / 255)[1:]
         h1, s1, v1 = colorsys.rgb_to_hsv(rgb[0] / 255, rgb[1] / 255, rgb[2] / 255)
-        rd, gr, bl = [int(x * 255) for x in colorsys.hsv_to_rgb(h1, s1 if s1 < s else s, v1 if v1 < v else v)]
+        rd, gr, bl = [
+            int(x * 255)
+            for x in colorsys.hsv_to_rgb(h1, s1 if s1 < s else s, v1 if v1 < v else v)
+        ]
         r_data.append(rd)
         g_data.append(gr)
         b_data.append(bl)
@@ -21,6 +24,7 @@ def to_rgb_colour(im, rgb):
     b.putdata(b_data)
     a.putdata(a_data)
     return Image.merge("RGBA", (r, g, b, a))
+
 
 def generate_emote_palette(palette_im):
     assert palette_im.width * palette_im.height == 256
@@ -38,6 +42,7 @@ def generate_emote_palette(palette_im):
                 emote_256_to_rgb[colour_256] = colour_rgb
     _assign_nearest_vacancies(emote_256_to_rgb, duplicate_colours)
     return emote_256_to_rgb
+
 
 # Fill any missing colours or remove duplicates
 def _assign_nearest_vacancies(emote_256_to_rgb, duplicate_colours):
