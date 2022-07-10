@@ -8,8 +8,5 @@ __pycache__
 *.tiff
 *.bmp
 
-# Except this important image
-!palette.png
-
-# And demo images
+# Add demo images
 !demo/*
