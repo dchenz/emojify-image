@@ -349,6 +349,13 @@ def parse_args() -> Namespace:
     if args.delay and args.delay <= 0:
         parser.error("--delay must be a positive integer")
 
+    if args.width % args.per_line:
+        print(
+            "WARN: --width should be divisible by",
+            "--per-line to prevent blank edges in the output.",
+            f"({args.width}, {args.per_line})",
+        )
+
     return args
 
 
@@ -359,6 +366,9 @@ def png_to_gif(args: Namespace):
     # Open source PNG and emoji images
     emoji_im = Image.open(args.emoji_path)
     png_im = Image.open(args.image_path)
+
+    print(f"emoji: size {emoji_im.size}, frames {emoji_im.n_frames}")
+    print(f"png: size {png_im.size}")
 
     # Need to change size to fit desired dimensions
     # Each pixel will be one emoji, so it's args.per_line
@@ -375,6 +385,8 @@ def png_to_gif(args: Namespace):
         bg_im = create_gif_frame(emoji_im, colored_im, frame, args)
         bg_frame_images.append(bg_im)
 
+        print(f"Created frame: {frame + 1}/{emoji_im.n_frames}")
+
     # Convert GIF frames into an actual GIF
     fn = get_output_filename(emoji_im, png_im, args)
     save_gif(bg_frame_images, fn, args.delay)
@@ -387,6 +399,9 @@ def gif_to_gif(args: Namespace):
     # Open source GIF and emoji images
     emoji_im = Image.open(args.emoji_path)
     gif_im = Image.open(args.image_path)
+
+    print(f"emoji: size {emoji_im.size}, frames {emoji_im.n_frames}")
+    print(f"gif: size {gif_im.size}, frames {gif_im.n_frames}")
 
     bg_frame_images = []
     for frame in range(gif_im.n_frames):
@@ -405,6 +420,8 @@ def gif_to_gif(args: Namespace):
 
         bg_im = create_gif_frame(emoji_im, colored_im, frame, args)
         bg_frame_images.append(bg_im)
+
+        print(f"Created frame: {frame + 1}/{gif_im.n_frames}")
 
     # Convert GIF frames into an actual GIF
     fn = get_output_filename(emoji_im, gif_im, args)
