@@ -11,7 +11,7 @@ These are examples created using Discord emojis. Try toggling your GitHub theme 
 ## Requirements
 
 - Python 3.7+
-- Pillow (tested with 9.1.1)
+- Pillow
 
 ```sh
 pip install -r requirements.txt
